@@ -29,24 +29,7 @@ export const options: {
   options: Option[];
 }[] = [
   {
-    heading: "general",
-    options: [
-      {
-        isCollapsible: false,
-        name: "Dashboard",
-        link: "",
-        icon: LayoutDashboard,
-      },
-      {
-        isCollapsible: false,
-        name: "Checkout",
-        link: "checkout",
-        icon: ShoppingCart,
-      },
-    ],
-  },
-  {
-    heading: "management",
+    heading: "Management",
     options: [
       {
         isCollapsible: true,
@@ -74,6 +57,12 @@ export const options: {
             icon: Settings,
           },
         ],
+      },
+      {
+        isCollapsible: false,
+        name: "Checkout",
+        link: "checkout",
+        icon: ShoppingCart,
       },
       {
         isCollapsible: false,
