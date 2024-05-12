@@ -28,7 +28,7 @@ const ProductComponent = ({ data, brands, categories }: Props) => {
         <ProductAddButton brands={brands} categories={categories} />
       </div>
       <Command className="bg-transparent">
-        <CommandInput placeholder="Search for product name..." />
+        <CommandInput placeholder="Search" />
         <CommandList className="pb-40 max-h-full ">
           <CommandGroup heading="Products">
             <div className="grid  md:grid-cols-2 xl:grid-cols-6  grid-cols-2  gap-2">

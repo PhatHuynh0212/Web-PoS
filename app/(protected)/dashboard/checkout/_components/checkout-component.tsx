@@ -30,7 +30,7 @@ const CheckoutComponent = ({ data }: Props) => {
         </Button>
       </div>
       <Command className="bg-transparent">
-        <CommandInput placeholder="Search for order name..." />
+        <CommandInput placeholder="Search" />
         <CommandList className="pb-40 max-h-full ">
           <CommandGroup heading="Orders">
             <div className="grid  md:grid-cols-2 xl:grid-cols-6  grid-cols-2  gap-2">

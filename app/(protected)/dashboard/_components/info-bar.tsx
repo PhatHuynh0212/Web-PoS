@@ -51,11 +51,11 @@ const InfoBar = ({ notifications, className, user }: Props) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem onClick={() => signOut()}>
-                Log out
+                Sign out
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
-          <Sheet>
+          {/* <Sheet>
             <SheetTrigger>
               <div className="rounded-full w-9 h-9 bg-primary flex items-center justify-center text-white">
                 <Bell size={17} />
@@ -108,8 +108,8 @@ const InfoBar = ({ notifications, className, user }: Props) => {
                 </div>
               )}
             </SheetContent>
-          </Sheet>
-          <ModeToggle />
+          </Sheet> */}
+
         </div>
       </div>
     </>

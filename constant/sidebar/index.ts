@@ -81,12 +81,6 @@ export const options: {
         link: "customers",
         icon: Contact,
       },
-      {
-        isCollapsible: false,
-        name: "Media",
-        link: "media",
-        icon: Database,
-      },
     ],
   },
 ];

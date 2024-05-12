@@ -26,7 +26,7 @@ const CategoryComponent = ({ data }: Props) => {
         <CategoryUploadButton />
       </div>
       <Command className="bg-transparent">
-        <CommandInput placeholder="Search for category name..." />
+        <CommandInput placeholder="Search" />
         <CommandList className="pb-40 max-h-full ">
           <CommandGroup heading="Categories">
             <div className="grid  md:grid-cols-2 xl:grid-cols-6  grid-cols-2   gap-2">

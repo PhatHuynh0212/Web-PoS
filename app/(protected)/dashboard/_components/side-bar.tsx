@@ -48,14 +48,7 @@ const SideBar: React.FC<Props> = ({ user, store }) => {
 
   const shouldShown = isExpand || isHovered;
   return (
-    <div
-      className={cn(
-        "group h-screen bg-background flex-shrink-0 hidden flex-col gap-y-2  p-2 border-r relative md:flex",
-        shouldShown && "w-[300px]"
-      )}
-      onMouseEnter={handleMouseEnter}
-      onMouseLeave={handleMouseLeave}
-    >
+    <div className="group h-screen bg-background flex-shrink-0 hidden flex-col gap-y-2  p-2 border-r relative md:flex w-[200px]" >
       <Button
         variant={"outline"}
         size={"icon"}
