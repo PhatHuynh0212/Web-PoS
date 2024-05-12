@@ -285,13 +285,8 @@ const StoreDetails = ({ data }: Props) => {
 
           {data?.id && (
             <div className="flex flex-row items-center justify-between rounded-lg border border-destructive gap-4 p-4 mt-4">
-              <div>
-                <div>Danger Zone</div>
-              </div>
-              <div className="text-muted-foreground">
-                Deleting your store cannot be undone. This will also delete all
-                data related.
-              </div>
+              
+              
               <AlertDialogTrigger
                 disabled={isLoading || deletingStore}
                 className="text-red-600 p-2 text-center mt-2 rounded-md hove:bg-red-600 hover:text-white whitespace-nowrap"
