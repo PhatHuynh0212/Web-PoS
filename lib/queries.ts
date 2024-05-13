@@ -1,92 +1,73 @@
-"use server";
+'use server'
 
-import { auth } from "@/auth";
-import { db } from "./db";
-import * as z from "zod";
-import {
-  CustomerDetailSchema,
-  StoreDetailsSchema,
-  MediaSchema,
-  CategorySchema,
-  BrandSchema,
-  ProductSchema,
-} from "@/schema";
-import { UTApi } from "uploadthing/server";
+import { auth } from '@/auth'
+import { db } from './db'
+import * as z from 'zod'
+import { CustomerDetailSchema, StoreDetailsSchema, MediaSchema, CategorySchema, BrandSchema, ProductSchema } from '@/schema'
+import { UTApi } from 'uploadthing/server'
 
-import { v4 } from "uuid";
-import { compareArraysOfObjects } from "./utils";
+import { v4 } from 'uuid'
+import { compareArraysOfObjects } from './utils'
 
-const utapi = new UTApi();
+const utapi = new UTApi()
 
 export const getAuthUserDetail = async () => {
-  const session = await auth();
+  const session = await auth()
   try {
-    const user = session?.user;
+    const user = session?.user
     if (!user) {
-      return null;
+      return null
     }
 
     const userData = await db.user.findFirst({
       where: {
         id: user.id,
       },
-    });
-    return userData;
+    })
+    return userData
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
 export const getStore = async () => {
-  const user = await getAuthUserDetail();
+  const user = await getAuthUserDetail()
   try {
-    if (!user) return null;
+    if (!user) return null
     const store = await db.store.findFirst({
       where: {
         userId: user.id,
       },
-    });
+    })
+    console.log('store: ', store)
 
-    return store;
+    return store
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
-export const upsertStore = async (
-  values: z.infer<typeof StoreDetailsSchema>,
-  storeId?: string
-) => {
+export const upsertStore = async (values: z.infer<typeof StoreDetailsSchema>, storeId?: string) => {
   try {
-    const validatedFields = StoreDetailsSchema.safeParse(values);
+    const validatedFields = StoreDetailsSchema.safeParse(values)
 
     if (!validatedFields.success) {
-      return null;
+      return null
     }
 
-    const {
-      name,
-      storeEmail,
-      storeLogo,
-      storePhone,
-      address,
-      country,
-      city,
-      state,
-      zipCode,
-    } = validatedFields.data;
+    const { name, storeEmail, storeLogo, storePhone, address, country, city, state, zipCode } = validatedFields.data
 
-    const user = await getAuthUserDetail();
+    const user = await getAuthUserDetail()
     if (!user) {
-      console.log("un auth");
-      return null;
+      console.log('un auth')
+      return null
     }
 
     if (storeId) {
-      const currentStore = await getStore();
-      if (!currentStore) return null;
+      const currentStore = await getStore()
+      if (!currentStore) return null
 
       if (storeLogo) {
         await db.media.update({
@@ -96,7 +77,7 @@ export const upsertStore = async (
           data: {
             storeId: currentStore.id,
           },
-        });
+        })
       }
 
       const updatedStore = await db.store.update({
@@ -114,9 +95,9 @@ export const upsertStore = async (
           state,
           zipCode,
         },
-      });
+      })
 
-      return updatedStore;
+      return updatedStore
     }
 
     const newStore = await db.store.create({
@@ -132,7 +113,7 @@ export const upsertStore = async (
         zipCode,
         userId: user.id,
       },
-    });
+    })
 
     if (newStore && storeLogo) {
       await db.media.update({
@@ -142,27 +123,27 @@ export const upsertStore = async (
         data: {
           storeId: newStore.id,
         },
-      });
+      })
     }
 
-    return newStore;
+    return newStore
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
 export const deleteStore = async () => {
   try {
-    const currentStore = await getStore();
-    if (!currentStore) return null;
-    const response = await db.store.delete({ where: { id: currentStore.id } });
-    return response;
+    const currentStore = await getStore()
+    if (!currentStore) return null
+    const response = await db.store.delete({ where: { id: currentStore.id } })
+    return response
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
 export const getNotificationAndUser = async (storeId: string) => {
   try {
@@ -172,32 +153,29 @@ export const getNotificationAndUser = async (storeId: string) => {
         user: true,
       },
       orderBy: {
-        createdAt: "desc",
+        createdAt: 'desc',
       },
-    });
-    return response;
+    })
+    return response
   } catch (error) {
-    console.log(error);
-    return [];
+    console.log(error)
+    return []
   }
-};
+}
 
-export const upsertCustomer = async (
-  values: z.infer<typeof CustomerDetailSchema>,
-  customerId?: string
-) => {
+export const upsertCustomer = async (values: z.infer<typeof CustomerDetailSchema>, customerId?: string) => {
   try {
-    const validatedFields = CustomerDetailSchema.safeParse(values);
+    const validatedFields = CustomerDetailSchema.safeParse(values)
 
     if (!validatedFields.success) {
-      return null;
+      return null
     }
 
-    const { address, city, country, name, email, phone } = validatedFields.data;
+    const { address, city, country, name, email, phone } = validatedFields.data
 
-    const store = await getStore();
+    const store = await getStore()
 
-    if (!store) return null;
+    if (!store) return null
 
     const customer = await db.customer.upsert({
       where: {
@@ -221,28 +199,28 @@ export const upsertCustomer = async (
         phone,
         storeId: store.id,
       },
-    });
+    })
 
-    return customer;
+    return customer
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
 export const upsertMedia = async (values: z.infer<typeof MediaSchema>) => {
   try {
-    const validatedFields = MediaSchema.safeParse(values);
+    const validatedFields = MediaSchema.safeParse(values)
 
     if (!validatedFields.success) {
-      return null;
+      return null
     }
 
-    const { imageUrl, name } = validatedFields.data;
+    const { imageUrl, name } = validatedFields.data
 
-    const store = await getStore();
+    const store = await getStore()
 
-    if (!store) return null;
+    if (!store) return null
 
     const media = await db.media.update({
       where: {
@@ -252,29 +230,23 @@ export const upsertMedia = async (values: z.infer<typeof MediaSchema>) => {
         name: name,
         storeId: store.id,
       },
-    });
+    })
 
-    console.log(media);
-    return media;
+    console.log(media)
+    return media
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
-export const saveActivityLogsNotification = async ({
-  description,
-  link,
-}: {
-  description: string;
-  link?: string;
-}) => {
+export const saveActivityLogsNotification = async ({ description, link }: { description: string; link?: string }) => {
   try {
-    const user = await getAuthUserDetail();
-    if (!user) return null;
-    const store = await getStore();
+    const user = await getAuthUserDetail()
+    if (!user) return null
+    const store = await getStore()
 
-    if (!store) return null;
+    if (!store) return null
 
     const newNoti = await db.notification.create({
       data: {
@@ -283,21 +255,21 @@ export const saveActivityLogsNotification = async ({
         userId: user.id,
         link: link,
       },
-    });
+    })
 
-    return newNoti;
+    return newNoti
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
 export const deleteMedias = async (imageKeys: string[]) => {
   try {
-    const store = await getStore();
+    const store = await getStore()
 
-    if (!store) return null;
-    const deletedFiles = await utapi.deleteFiles(imageKeys);
+    if (!store) return null
+    const deletedFiles = await utapi.deleteFiles(imageKeys)
     if (deletedFiles.success) {
       const medias = await db.media.deleteMany({
         where: {
@@ -305,33 +277,30 @@ export const deleteMedias = async (imageKeys: string[]) => {
             in: imageKeys,
           },
         },
-      });
+      })
 
-      return medias;
+      return medias
     } else {
-      return null;
+      return null
     }
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
-export const upsertCategory = async (
-  values: z.infer<typeof CategorySchema>,
-  categoryId?: string
-) => {
+export const upsertCategory = async (values: z.infer<typeof CategorySchema>, categoryId?: string) => {
   try {
-    const validatedFields = CategorySchema.safeParse(values);
+    const validatedFields = CategorySchema.safeParse(values)
 
     if (!validatedFields.success) {
-      return null;
+      return null
     }
 
-    const { imageUrl, name, description } = validatedFields.data;
-    const store = await getStore();
+    const { imageUrl, name, description } = validatedFields.data
+    const store = await getStore()
 
-    if (!store) return null;
+    if (!store) return null
 
     if (imageUrl) {
       await db.media.update({
@@ -341,7 +310,7 @@ export const upsertCategory = async (
         data: {
           storeId: store.id,
         },
-      });
+      })
     }
 
     const category = await db.category.upsert({
@@ -359,49 +328,46 @@ export const upsertCategory = async (
         description,
         storeId: store.id,
       },
-    });
+    })
 
-    return category;
+    return category
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
 export const deleteCategory = async (categoryId: string) => {
   try {
-    const store = await getStore();
+    const store = await getStore()
 
-    if (!store) return null;
+    if (!store) return null
 
     const category = await db.category.delete({
       where: {
         id: categoryId,
       },
-    });
+    })
 
-    return category;
+    return category
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
-export const upsertBrand = async (
-  values: z.infer<typeof BrandSchema>,
-  brandId?: string
-) => {
+export const upsertBrand = async (values: z.infer<typeof BrandSchema>, brandId?: string) => {
   try {
-    const validatedFields = BrandSchema.safeParse(values);
+    const validatedFields = BrandSchema.safeParse(values)
 
     if (!validatedFields.success) {
-      return null;
+      return null
     }
 
-    const { imageUrl, name, description } = validatedFields.data;
-    const store = await getStore();
+    const { imageUrl, name, description } = validatedFields.data
+    const store = await getStore()
 
-    if (!store) return null;
+    if (!store) return null
 
     if (imageUrl) {
       await db.media.update({
@@ -411,7 +377,7 @@ export const upsertBrand = async (
         data: {
           storeId: store.id,
         },
-      });
+      })
     }
 
     const brand = await db.brand.upsert({
@@ -429,57 +395,45 @@ export const upsertBrand = async (
         description,
         storeId: store.id,
       },
-    });
+    })
 
-    return brand;
+    return brand
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
 export const deleteBrand = async (brandId: string) => {
   try {
-    const store = await getStore();
+    const store = await getStore()
 
-    if (!store) return null;
+    if (!store) return null
 
     const brand = await db.brand.delete({
       where: {
         id: brandId,
       },
-    });
+    })
 
-    return brand;
+    return brand
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
-export const upsertProduct = async (
-  values: z.infer<typeof ProductSchema>,
-  productId?: string
-) => {
+export const upsertProduct = async (values: z.infer<typeof ProductSchema>, productId?: string) => {
   try {
-    const validatedFields = ProductSchema.safeParse(values);
+    const validatedFields = ProductSchema.safeParse(values)
 
     if (!validatedFields.success) {
-      return null;
+      return null
     }
 
-    const {
-      basePrice,
-      brands,
-      categories,
-      description,
-      discountPrice,
-      imageUrl,
-      isDiscounting,
-      name,
-    } = validatedFields.data;
-    const store = await getStore();
-    if (!store) return null;
+    const { basePrice, brands, categories, description, discountPrice, imageUrl, isDiscounting, name } = validatedFields.data
+    const store = await getStore()
+    if (!store) return null
 
     if (imageUrl) {
       await db.media.update({
@@ -489,7 +443,7 @@ export const upsertProduct = async (
         data: {
           storeId: store.id,
         },
-      });
+      })
     }
 
     if (!productId) {
@@ -509,9 +463,9 @@ export const upsertProduct = async (
           },
           storeId: store.id,
         },
-      });
+      })
 
-      return product;
+      return product
     } else {
       const existingProduct = await db.product.findFirst({
         where: {
@@ -531,17 +485,13 @@ export const upsertProduct = async (
             },
           },
         },
-      });
+      })
 
-      if (!existingProduct) return null;
+      if (!existingProduct) return null
 
-      const { addedEntries: addedBrands, removedEntries: removedBrands } =
-        compareArraysOfObjects(existingProduct.brands, brands);
+      const { addedEntries: addedBrands, removedEntries: removedBrands } = compareArraysOfObjects(existingProduct.brands, brands)
 
-      const {
-        addedEntries: addedCategories,
-        removedEntries: removedCategories,
-      } = compareArraysOfObjects(existingProduct.categories, categories);
+      const { addedEntries: addedCategories, removedEntries: removedCategories } = compareArraysOfObjects(existingProduct.categories, categories)
 
       const product = await db.product.update({
         where: {
@@ -563,48 +513,48 @@ export const upsertProduct = async (
             disconnect: removedBrands.map((c) => ({ id: c.id })),
           },
         },
-      });
-      return product;
+      })
+      return product
     }
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
 export const deleteProduct = async (productId: string) => {
   try {
-    const store = await getStore();
-    if (!store) return null;
+    const store = await getStore()
+    if (!store) return null
 
     const product = await db.product.delete({
       where: {
         id: productId,
       },
-    });
+    })
 
-    return product;
+    return product
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
 
 export const deleteCustomer = async (cusomterId: string) => {
   try {
-    const store = await getStore();
+    const store = await getStore()
 
-    if (!store) return null;
+    if (!store) return null
 
     const customer = await db.customer.delete({
       where: {
         id: cusomterId,
       },
-    });
+    })
 
-    return customer;
+    return customer
   } catch (error) {
-    console.log(error);
-    return null;
+    console.log(error)
+    return null
   }
-};
+}
