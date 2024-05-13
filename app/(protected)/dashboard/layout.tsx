@@ -10,9 +10,10 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
   if (!user) redirect('/')
 
   const store = await getStore()
+  console.log('store: ', store)
 
   if (!store) {
-    redirect('/dashboard')
+    redirect('/setup')
   }
 
   let allNoti: any = []
