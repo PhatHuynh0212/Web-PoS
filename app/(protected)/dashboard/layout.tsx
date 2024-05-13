@@ -1,9 +1,8 @@
-import { deleteStore, getAuthUserDetail, getNotificationAndUser, getStore } from '@/lib/queries'
+import { getAuthUserDetail, getNotificationAndUser, getStore } from '@/lib/queries'
 import { redirect } from 'next/navigation'
 import React from 'react'
 import SideBar from './_components/side-bar'
 import InfoBar from './_components/info-bar'
-import { signOut } from 'next-auth/react'
 
 const layout = async ({ children }: { children: React.ReactNode }) => {
   const user = await getAuthUserDetail()
@@ -13,9 +12,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
   const store = await getStore()
 
   if (!store) {
-    deleteStore()
-    await signOut()
-    redirect('/')
+    redirect('/dashboard')
   }
 
   let allNoti: any = []

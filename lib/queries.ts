@@ -40,7 +40,6 @@ export const getStore = async () => {
         userId: user.id,
       },
     })
-    console.log('store: ', store)
 
     return store
   } catch (error) {
