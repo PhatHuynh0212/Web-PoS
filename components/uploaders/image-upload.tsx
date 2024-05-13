@@ -30,7 +30,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
             alt="upload"
             width={150}
             height={200}
-            className=" rounded-[10px]"
+            className="rounded-[10px]"
           />
 
           <Button
@@ -38,9 +38,9 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
             type="button"
             variant={"destructive"}
             size={"icon"}
-            className="absolute -top-4 -right-4 rounded-[50%]"
+            className="absolute -top-4 -right-4 rounded-[50%] bg-[#FFB900]"
           >
-            <X className="h-4 w-4" />
+            <X className="h-3 w-3" />
           </Button>
         </div>
       </div>
@@ -48,7 +48,7 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
   }
 
   return (
-    <>
+    <div>
       <UploadButton
         endpoint={endpoint}
         onClientUploadComplete={(res) => {
@@ -60,6 +60,6 @@ export const ImageUpload: React.FC<ImageUploadProps> = ({
           alert(`ERROR! ${error.message}`);
         }}
       />
-    </>
+    </div>
   );
 };

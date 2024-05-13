@@ -98,7 +98,7 @@ const CustomerSelect = ({ options, defaultValues, onChange }: Props) => {
                       onClick={(e) => {
                         e.stopPropagation();
                         modalOpen(
-                          <CustomModal title="Create a customter" subheading="">
+                          <CustomModal title="Create a customer" subheading="">
                             <CustomerDetail data={o} />
                           </CustomModal>
                         );
@@ -112,7 +112,7 @@ const CustomerSelect = ({ options, defaultValues, onChange }: Props) => {
               type="button"
               onClick={() => {
                 modalOpen(
-                  <CustomModal title="Create a customter" subheading="">
+                  <CustomModal title="Create a customer" subheading="">
                     <CustomerDetail />
                   </CustomModal>
                 );

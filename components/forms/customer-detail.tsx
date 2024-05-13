@@ -93,7 +93,7 @@ const CustomerDetail = ({ data }: Props) => {
             console.log(error);
             toast({
                 variant: "destructive",
-                title: "Oppse!",
+                title: "Oh no!",
                 description: "Something went wrong",
             });
         }

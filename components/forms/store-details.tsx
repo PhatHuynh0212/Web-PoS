@@ -164,7 +164,7 @@ const StoreDetails = ({ data }: Props) => {
                                             <FormLabel>Name</FormLabel>
                                             <FormControl>
                                                 <Input
-                                                    placeholder="Your store name"
+                                                    placeholder="Store name"
                                                     {...field}
                                                 />
                                             </FormControl>
@@ -172,6 +172,8 @@ const StoreDetails = ({ data }: Props) => {
                                         </FormItem>
                                     )}
                                 />
+                            </div>
+                            <div className="flex md:flex-row gap-4">
                                 <FormField
                                     disabled={isLoading}
                                     control={form.control}
@@ -219,7 +221,7 @@ const StoreDetails = ({ data }: Props) => {
                                         <FormLabel>Address</FormLabel>
                                         <FormControl>
                                             <Input
-                                                placeholder="123 st..."
+                                                placeholder="3/2 Nguyen Tri Phuong"
                                                 {...field}
                                             />
                                         </FormControl>
@@ -227,6 +229,25 @@ const StoreDetails = ({ data }: Props) => {
                                     </FormItem>
                                 )}
                             />
+                            <div className="flex md:flex-row gap-4">
+                                <FormField
+                                    disabled={isLoading}
+                                    control={form.control}
+                                    name="state"
+                                    render={({ field }) => (
+                                        <FormItem className="flex-1">
+                                            <FormLabel>District</FormLabel>
+                                            <FormControl>
+                                                <Input
+                                                    placeholder="District"
+                                                    {...field}
+                                                />
+                                            </FormControl>
+                                            <FormMessage />
+                                        </FormItem>
+                                    )}
+                                />
+                            </div>
                             <div className="flex md:flex-row gap-4">
                                 <FormField
                                     disabled={isLoading}
@@ -245,23 +266,8 @@ const StoreDetails = ({ data }: Props) => {
                                         </FormItem>
                                     )}
                                 />
-                                <FormField
-                                    disabled={isLoading}
-                                    control={form.control}
-                                    name="state"
-                                    render={({ field }) => (
-                                        <FormItem className="flex-1">
-                                            <FormLabel>State</FormLabel>
-                                            <FormControl>
-                                                <Input
-                                                    placeholder="State"
-                                                    {...field}
-                                                />
-                                            </FormControl>
-                                            <FormMessage />
-                                        </FormItem>
-                                    )}
-                                />
+                            </div>
+                            <div className="flex md:flex-row gap-4">
                                 <FormField
                                     disabled={isLoading}
                                     control={form.control}
@@ -297,12 +303,12 @@ const StoreDetails = ({ data }: Props) => {
                                     </FormItem>
                                 )}
                             />
-                            <div className="flex justify-between items-center">
-                                <Button type="submit" disabled={isLoading}>
+                            <div className="flex justify-between items-center pt-4">
+                                <Button type="submit" disabled={isLoading} className="h-12 w-50 flex justify-center items-center" style={{fontSize: '18px'}}>
                                     {isLoading ? (
                                         <Loading />
                                     ) : (
-                                        "Save store Information"
+                                        "Save information"
                                     )}
                                 </Button>
                                 {data?.id && (
@@ -351,3 +357,4 @@ const StoreDetails = ({ data }: Props) => {
 };
 
 export default StoreDetails;
+
