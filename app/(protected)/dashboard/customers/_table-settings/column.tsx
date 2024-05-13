@@ -20,19 +20,16 @@ export const columns: ColumnDef<Customer>[] = [
     },
   },
   {
+    id: 'index',
+    header: 'No.',
+    cell: ({ row }) => row.index + 1,
+  },
+  {
     accessorKey: "name",
     header: "Name",
     cell: ({ row }) => {
       return (
         <div className="flex items-center gap-4">
-          <div className="h-11 w-11 relative flex-none">
-            <Avatar>
-              <AvatarImage alt="@shadcn" />
-              <AvatarFallback className="bg-primary text-white">
-                {row.original.name.slice(0, 2).toUpperCase()}
-              </AvatarFallback>
-            </Avatar>
-          </div>
           <span>{row.original.name}</span>
         </div>
       );

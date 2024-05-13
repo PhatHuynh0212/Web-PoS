@@ -97,7 +97,7 @@ const StoreDetails = ({ data }: Props) => {
             console.log(error);
             toast({
                 variant: "destructive",
-                title: "Oppse!",
+                title: "Oh no!",
                 description: "Something went wrong",
             });
         }
@@ -117,7 +117,7 @@ const StoreDetails = ({ data }: Props) => {
             toast({
                 variant: "destructive",
                 title: "Oops!",
-                description: "could not delete your stpre",
+                description: "could not delete your store",
             });
         }
         router.push("/setup");

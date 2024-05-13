@@ -5,7 +5,7 @@ export const apiAuthPrefix = "/api/auth";
 export const uploadthingPreflix = "/api/uploadthing";
 
 export default auth((req) => {
-    console.log("💻💻💻💻", req.nextUrl.pathname);
+    console.log(req.nextUrl.pathname);
     const { nextUrl } = req;
     const isLoggedIn = !!req.auth;
 
