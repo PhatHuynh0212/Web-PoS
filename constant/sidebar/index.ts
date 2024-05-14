@@ -32,12 +32,6 @@ export const options: {
     heading: "Overview",
     options: [
       {
-        isCollapsible: false,
-        name: "Dashboard",
-        link: "",
-        icon: LayoutDashboard,
-      },
-      {
         isCollapsible: true,
         name: "Shop",
         icon: Store,
