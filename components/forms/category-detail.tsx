@@ -184,51 +184,55 @@ const CategoryDetail: React.FC<Props> = ({ data }) => {
                                     </FormItem>
                                 )}
                             />
-                            {data?.id && (
-                                <div className="flex justify-between items-center mt-4">
-                                    <Button
-                                        type="submit"
-                                        className="pr-5 pl-5"
-                                        disabled={isLoading}
-                                    >
-                                        Save
-                                    </Button>
-
-                                    <AlertDialogTrigger
-                                        disabled={isLoading || isDeleting}
-                                        className="bg-destructive text-white p-2 text-center rounded-md hove:bg-red-600  whitespace-nowrap"
-                                    >
-                                        {isDeleting
-                                            ? "Deleting..."
-                                            : "Delete brand"}
-                                    </AlertDialogTrigger>
-
-                                    <AlertDialogContent>
-                                        <AlertDialogHeader>
-                                            <AlertDialogTitle className="text-left">
-                                                Surely, you want to delete?
-                                            </AlertDialogTitle>
-                                            <AlertDialogDescription className="text-left">
-                                                Data cannot be recovered
-                                            </AlertDialogDescription>
-                                        </AlertDialogHeader>
-                                        <AlertDialogFooter className="flex items-center">
-                                            <AlertDialogCancel>
-                                                Cancel
-                                            </AlertDialogCancel>
-                                            <AlertDialogAction
-                                                disabled={isDeleting}
-                                                className="bg-destructive hover:bg-destructive"
-                                                onClick={() =>
-                                                    onDelete(data.id)
+                            <div className="flex flex-row items-center justify-between">
+                                <Button
+                                    type="submit"
+                                    className="mt-4"
+                                    disabled={isLoading}
+                                >
+                                    Save
+                                </Button>
+                                {data?.id && (
+                                    <>
+                                        <div className="flex flex-row items-center justify-between mt-4">
+                                            <AlertDialogTrigger
+                                                disabled={
+                                                    isLoading || isDeleting
                                                 }
+                                                className="bg-destructive text-white p-2 text-center mt-2 rounded-md hove:bg-red-600  whitespace-nowrap"
                                             >
-                                                Delete
-                                            </AlertDialogAction>
-                                        </AlertDialogFooter>
-                                    </AlertDialogContent>
-                                </div>
-                            )}
+                                                {isDeleting
+                                                    ? "Deleting..."
+                                                    : "Delete"}
+                                            </AlertDialogTrigger>
+                                        </div>
+                                        <AlertDialogContent>
+                                            <AlertDialogHeader>
+                                                <AlertDialogTitle className="text-left">
+                                                    Surely, you want to delete?
+                                                </AlertDialogTitle>
+                                                <AlertDialogDescription className="text-left">
+                                                    Data cannot be recovered
+                                                </AlertDialogDescription>
+                                            </AlertDialogHeader>
+                                            <AlertDialogFooter className="flex items-center">
+                                                <AlertDialogCancel className="mb-2">
+                                                    Cancel
+                                                </AlertDialogCancel>
+                                                <AlertDialogAction
+                                                    disabled={isDeleting}
+                                                    className="bg-destructive hover:bg-destructive"
+                                                    onClick={() =>
+                                                        onDelete(data.id)
+                                                    }
+                                                >
+                                                    Delete
+                                                </AlertDialogAction>
+                                            </AlertDialogFooter>
+                                        </AlertDialogContent>
+                                    </>
+                                )}
+                            </div>
                         </form>
                     </Form>
                 </CardContent>

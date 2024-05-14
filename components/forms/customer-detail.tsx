@@ -245,24 +245,21 @@ const CustomerDetail = ({ data }: Props) => {
                                     </FormItem>
                                 )}
                             />
-                            <Button type="submit" disabled={isLoading}>
-                                {isLoading ? (
-                                    <Loading />
-                                ) : (
-                                    "Save customer information"
-                                )}
-                            </Button>
+                            <div className="flex flex-row justify-center">
+                                <Button type="submit" disabled={isLoading}>
+                                    {isLoading ? (
+                                        <Loading />
+                                    ) : (
+                                        "Save"
+                                    )}
+                                </Button>
+                            </div>
                         </form>
                     </Form>
 
                     {data?.id && (
                         <>
-                            <div className="flex flex-row items-center justify-between rounded-lg border border-destructive gap-4 p-4 mt-4">
-                                <div>
-                                    <div className="text-destructive">
-                                        Danger Zone
-                                    </div>
-                                </div>
+                            <div className="flex flex-row items-center justify-between mt-4">
 
                                 <AlertDialogTrigger
                                     disabled={isLoading || isDeleting}
