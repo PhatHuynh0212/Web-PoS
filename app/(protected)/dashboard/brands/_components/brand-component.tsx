@@ -41,7 +41,7 @@ const BrandComponent = ({ data }: Props) => {
                                 </CommandItem>
                             ))}
                             {!data.length && (
-                                <div className=" col-span-full flex items-center justify-center w-full flex-col">
+                                <div className=" col-span-full flex items-center justify-center w-full flex-col hidden">
                                     <FolderSearch
                                         size={200}
                                         className="dark:text-muted text-slate-300"

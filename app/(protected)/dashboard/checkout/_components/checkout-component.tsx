@@ -55,7 +55,7 @@ const CheckoutComponent = ({ data }: Props) => {
                                         className="dark:text-muted text-slate-300"
                                     />
                                     <p className="text-muted-foreground ">
-                                        Empty! no order history to show.
+                                        No order in your shop!
                                     </p>
                                 </div>
                             )}

@@ -29,7 +29,7 @@ export const options: {
   options: Option[];
 }[] = [
   {
-    heading: "Management",
+    heading: "Overview",
     options: [
       {
         isCollapsible: false,
