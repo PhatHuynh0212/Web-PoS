@@ -58,12 +58,12 @@ export const options: {
           },
         ],
       },
-      {
-        isCollapsible: false,
-        name: "Checkout",
-        link: "checkout",
-        icon: ShoppingCart,
-      },
+      // {
+      //   isCollapsible: false,
+      //   name: "Checkout",
+      //   link: "checkout",
+      //   icon: ShoppingCart,
+      // },
       {
         isCollapsible: false,
         name: "Customers",
