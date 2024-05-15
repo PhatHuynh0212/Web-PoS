@@ -21,9 +21,6 @@ interface Props {
 const SideBar: React.FC<Props> = ({ user, store }) => {
   return (
     <div className={cn('group h-screen bg-background flex-shrink-0 hidden flex-col gap-y-2  p-2 border-r relative md:flex w-[200px] bg-[#FFFCF4] mt-2')}>
-      <div className='w-full  flex items-center justify-center'>
-        <Image src={store.storeLogo || '/images/placeholder.webp'} alt='Sidebar Logo' width={80} height={80} className='rounded-md object-contain' />
-      </div>
       <Command className='bg-[#FFFCF4]'>
         <CommandList>
           {options.map((section, i) => {

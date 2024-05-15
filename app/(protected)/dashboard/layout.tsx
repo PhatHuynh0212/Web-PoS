@@ -10,7 +10,6 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
   if (!user) redirect('/')
 
   const store = await getStore()
-  console.log('store: ', store)
 
   if (!store) {
     redirect('/setup')
@@ -24,7 +23,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
     <div className='relative flex w-full min-h-screen'>
       <SideBar store={store} user={user} />
       <div className='flex-[1_0_0] relative flex flex-col gap-y-2 ' style={{ backgroundColor: '#FFFFFF' }}>
-        <InfoBar notifications={allNoti} user={user} />
+        <InfoBar store={store} notifications={allNoti} user={user} />
         <div className='px-4'>{children}</div>
       </div>
     </div>
